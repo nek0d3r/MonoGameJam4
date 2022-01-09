@@ -93,7 +93,6 @@ namespace MonoGameJam4
             // Window is not supporting Alt + Enter despite Window.AllowAltF4, so this handles shortcut fullscreen toggle
             if ((currentKey.IsKeyDown(Keys.LeftAlt) || currentKey.IsKeyDown(Keys.RightAlt)) && currentKey.IsKeyDown(Keys.Enter) && !prevKey.IsKeyDown(Keys.Enter))
             {
-                Console.WriteLine($"Current window size: {Window.ClientBounds}");
                 // If not currently fullscreen, handle window changes before fullscreen
                 if (!_graphics.IsFullScreen)
                 {
@@ -115,7 +114,6 @@ namespace MonoGameJam4
                 }
                 // Trigger window change
                 WindowChanged(true, null);
-                Console.WriteLine($"Current window size: {Window.ClientBounds}");
             }
 
             // TODO: Add your update logic here
