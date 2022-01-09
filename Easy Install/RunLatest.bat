@@ -3,7 +3,6 @@
 : Environment variables
 set @netmin=3.1&                                        : Minimum .NET SDK version
 set @netmax=3.2&                                        : Upper bound .NET version
-set @framework=netcoreapp3.1&                           : .NET target framework
 set @gitfile=Git-2.34.1-64-bit&                         : Filename of git installer
 set @project=MonoGameJam4\&                             : Project directory
 set @gitrepo=https://github.com/nek0d3r/MonoGameJam4&   : Git repository URL
@@ -25,6 +24,9 @@ dotnet --version >nul 2>&1 && (
             echo .NET SDK version %%i is not supported. Installing %@netmin%...
             : Thank you SO MUCH to Daniel Schroeder for this one
             Powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "& './dotnet-install.ps1' -Channel %@netmin%"
+            setlocal
+            set PATH="%PATH%;%LOCALAPPDATA%\Microsoft\dotnet"
+
         )
     )
     : Remove temp file
@@ -33,6 +35,8 @@ dotnet --version >nul 2>&1 && (
     : Install .NET SDK LTS using Microsoft powershell script
     echo .NET SDK not found. Installing %@netmin%...
     Powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "& './dotnet-install.ps1' -Channel %@netmin%"
+    setlocal
+    set PATH="%PATH%;%LOCALAPPDATA%\Microsoft\dotnet"
 )
 
 @REM GIT DEPENDENCY
