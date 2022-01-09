@@ -50,7 +50,7 @@ git --version >nul 2>&1 && (
     : Install git for windows using provided installer
     : and script written by Pat Migliaccio
     echo Git not found. Installing Git...
-    call install-git.bat %@gitfile%
+    call install-git.bat
 )
 
 @REM PROJECT DEPENDENCY
