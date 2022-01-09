@@ -21,7 +21,8 @@ dotnet --version >nul 2>&1 && (
         ) else (
             : Install .NET SDK LTS using Microsoft powershell script
             echo .NET SDK version %%i is too old. Installing LTS...
-            Powershell.exe -File ./dotnet-install.ps1
+            : Thank you SO MUCH to Daniel Schroeder for this one
+            Powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "& './dotnet-install.ps1'"
         )
     )
     : Remove temp file
@@ -29,7 +30,7 @@ dotnet --version >nul 2>&1 && (
 ) || (
     : Install .NET SDK LTS using Microsoft powershell script
     echo .NET SDK not found. Installing latest LTS...
-    Powershell.exe -File ./dotnet-install.ps1
+    Powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "& './dotnet-install.ps1'"
 )
 
 @REM GIT DEPENDENCY
