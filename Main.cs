@@ -159,10 +159,11 @@ namespace MonoGameJam4
 
         protected override void Draw(GameTime gameTime)
         {
+            // Render drawing to sprite buffer
             GraphicsDevice.SetRenderTarget(_render);
             GraphicsDevice.Clear(Color.Black);
 
-            // TODO: Draw here
+            // Drawing begins here
             _spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp);
             for(var i = 0; i < Globals.BUFFER_TILE_DIMS.Y; i++)
             {
@@ -176,9 +177,11 @@ namespace MonoGameJam4
             }
             _spriteBatch.End();
 
+            // Set render target to device back buffer and clear
             GraphicsDevice.SetRenderTarget(null);
             GraphicsDevice.Clear(Color.White);
 
+            // Draw sprite buffer to back buffer
             _spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp);
             _spriteBatch.Draw((Texture2D)_render, Globals.renderDims, Color.White);
             _spriteBatch.End();
