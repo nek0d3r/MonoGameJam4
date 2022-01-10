@@ -31,11 +31,11 @@ namespace MonoGameJam4
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private RenderTarget2D _render;
-
-        private Texture2D pixel;
         
         // Captured window size before fullscreen
         private Point previousWindowSize;
+
+        private Texture2D pixel;
 
         KeyboardState currentKey = new KeyboardState(), prevKey;
 
@@ -54,7 +54,6 @@ namespace MonoGameJam4
         /***
          * Thrown on resizing the window.
          * Attempts to fill the buffer while maintaining aspect ratio.
-         * TODO: Handling window maximizing. Currently the last buffer dimensions are stretched to fit the window, but doesn't update to fill or fit properly.
          */
         public void WindowChanged(object sender, EventArgs e)
         {
