@@ -8,7 +8,7 @@ namespace MonoGameJam4
     public static class Globals
     {
         // Default size of window
-        public static readonly Point DEFAULT_WINDOW_SIZE = new Point(800, 400);
+        public static readonly Point DEFAULT_WINDOW_SIZE = new Point(640, 320);
 
         // Current size of window
         public static Point currentWindowSize = DEFAULT_WINDOW_SIZE;
@@ -36,6 +36,7 @@ namespace MonoGameJam4
         private Point previousWindowSize;
 
         private Texture2D pixel;
+        private Texture2D mockup;
 
         KeyboardState currentKey = new KeyboardState(), prevKey;
 
@@ -114,6 +115,7 @@ namespace MonoGameJam4
             _render = new RenderTarget2D(GraphicsDevice, Globals.BUFFER_SIZE.X, Globals.BUFFER_SIZE.Y);
 
             pixel = Content.Load<Texture2D>("pixel");
+            mockup = Content.Load<Texture2D>("mockup");
         }
 
         protected override void Update(GameTime gameTime)
@@ -169,9 +171,10 @@ namespace MonoGameJam4
             {
                 for(var j = 0; j < Globals.BUFFER_TILE_DIMS.X; j++)
                 {
-                    if((j % 2 == 0 && i % 2 == 0) || (j % 2 != 0 && i % 2 != 0))
+                    if((j % 4 == 0 && i % 2 == 0) || ((j - 2) % 4 == 0 && i % 2 != 0))
                     {
-                        _spriteBatch.Draw(pixel, new Rectangle(j * Globals.PIXEL_DEPTH, i * Globals.PIXEL_DEPTH, Globals.PIXEL_DEPTH, Globals.PIXEL_DEPTH), null, Color.Blue * 1f);
+                        _spriteBatch.Draw(mockup, new Rectangle(j * Globals.PIXEL_DEPTH, i * Globals.PIXEL_DEPTH, Globals.PIXEL_DEPTH, Globals.PIXEL_DEPTH), new Rectangle(0, 0, Globals.PIXEL_DEPTH, Globals.PIXEL_DEPTH), Color.White);
+                        _spriteBatch.Draw(mockup, new Rectangle(j * Globals.PIXEL_DEPTH + Globals.PIXEL_DEPTH, i * Globals.PIXEL_DEPTH, Globals.PIXEL_DEPTH, Globals.PIXEL_DEPTH), new Rectangle(16, 0, Globals.PIXEL_DEPTH, Globals.PIXEL_DEPTH), Color.White);
                     }
                 }
             }
@@ -179,7 +182,7 @@ namespace MonoGameJam4
 
             // Set render target to device back buffer and clear
             GraphicsDevice.SetRenderTarget(null);
-            GraphicsDevice.Clear(Color.White);
+            GraphicsDevice.Clear(Color.Black);
 
             // Draw sprite buffer to back buffer
             _spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp);
