@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -24,6 +25,9 @@ namespace MonoGameJam4
 
         // How to apply buffer to render target
         public static Rectangle renderDims;
+
+        // Default water width from the bottom
+        public static readonly int NEUTRAL_WATER_LEVEL = 2;
     }
 
     public class Main : Game
@@ -39,6 +43,9 @@ namespace MonoGameJam4
         private Texture2D mockup;
 
         KeyboardState currentKey = new KeyboardState(), prevKey;
+
+        // Tilemaps of background, foreground, and objects
+        List<List<Point>> bg, fg, obj;
 
         public Main()
         {
@@ -97,7 +104,17 @@ namespace MonoGameJam4
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            bg = new List<List<Point>>();
+
+            for(var i = 0; i < Globals.BUFFER_TILE_DIMS.Y; i++)
+            {
+                var bgRow = new List<Point>();
+                for(var j = 0; j < Globals.BUFFER_TILE_DIMS.X; j++)
+                {
+                    bgRow.Add(new Point(0,0));
+                }
+                bg.Add(bgRow);
+            }
 
             base.Initialize();
 
@@ -167,16 +184,20 @@ namespace MonoGameJam4
 
             // Drawing begins here
             _spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp);
+
             for(var i = 0; i < Globals.BUFFER_TILE_DIMS.Y; i++)
             {
                 for(var j = 0; j < Globals.BUFFER_TILE_DIMS.X; j++)
                 {
-                    if((j % 2 == 0 && i % 2 == 0) || ((j - 1) % 2 == 0) && ((i - 1) % 2 == 0))
-                    {
-                        _spriteBatch.Draw(mockup, new Rectangle(j * Globals.PIXEL_DEPTH, i * Globals.PIXEL_DEPTH, Globals.PIXEL_DEPTH, Globals.PIXEL_DEPTH), new Rectangle(Globals.PIXEL_DEPTH, Globals.PIXEL_DEPTH, Globals.PIXEL_DEPTH, Globals.PIXEL_DEPTH), Color.White);
-                    }
+                    _spriteBatch.Draw(
+                        mockup,
+                        new Rectangle(j * Globals.PIXEL_DEPTH, i * Globals.PIXEL_DEPTH, Globals.PIXEL_DEPTH, Globals.PIXEL_DEPTH),
+                        new Rectangle(Globals.PIXEL_DEPTH * bg[i][j].X, Globals.PIXEL_DEPTH * bg[i][j].X, Globals.PIXEL_DEPTH, Globals.PIXEL_DEPTH),
+                        Color.White
+                    );
                 }
             }
+
             _spriteBatch.End();
 
             // Set render target to device back buffer and clear
