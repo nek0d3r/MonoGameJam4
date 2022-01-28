@@ -171,10 +171,9 @@ namespace MonoGameJam4
             {
                 for(var j = 0; j < Globals.BUFFER_TILE_DIMS.X; j++)
                 {
-                    if((j % 4 == 0 && i % 2 == 0) || ((j - 2) % 4 == 0 && i % 2 != 0))
+                    if((j % 2 == 0 && i % 2 == 0) || ((j - 1) % 2 == 0) && ((i - 1) % 2 == 0))
                     {
-                        _spriteBatch.Draw(mockup, new Rectangle(j * Globals.PIXEL_DEPTH, i * Globals.PIXEL_DEPTH, Globals.PIXEL_DEPTH, Globals.PIXEL_DEPTH), new Rectangle(0, 0, Globals.PIXEL_DEPTH, Globals.PIXEL_DEPTH), Color.White);
-                        _spriteBatch.Draw(mockup, new Rectangle(j * Globals.PIXEL_DEPTH + Globals.PIXEL_DEPTH, i * Globals.PIXEL_DEPTH, Globals.PIXEL_DEPTH, Globals.PIXEL_DEPTH), new Rectangle(16, 0, Globals.PIXEL_DEPTH, Globals.PIXEL_DEPTH), Color.White);
+                        _spriteBatch.Draw(mockup, new Rectangle(j * Globals.PIXEL_DEPTH, i * Globals.PIXEL_DEPTH, Globals.PIXEL_DEPTH, Globals.PIXEL_DEPTH), new Rectangle(Globals.PIXEL_DEPTH, Globals.PIXEL_DEPTH, Globals.PIXEL_DEPTH, Globals.PIXEL_DEPTH), Color.White);
                     }
                 }
             }
